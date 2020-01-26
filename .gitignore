@@ -1,0 +1,4 @@
+node_modules
+.env
+*.log
+src/app copy.js
