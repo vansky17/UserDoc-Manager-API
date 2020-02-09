@@ -1,5 +1,5 @@
 {
-  "name": "Bookmark-API",
+  "name": "user-docs-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,8 @@
     "predeploy": "npm audit",
     "deploy": "git push heroku master",
     "migrate": "postgrator --config postgrator-config.js",
-    "migrate-test": "env NODE_ENV=test npm run migrate"
+    "migrate-test": "env NODE_ENV=test npm run migrate",
+    "migrate:production": "env SSL=true DATABASE_URL=$(heroku config:get DATABASE_URL) npm run migrate"
   },
   "keywords": [],
   "author": "",
