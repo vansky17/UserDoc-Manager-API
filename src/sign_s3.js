@@ -5,10 +5,11 @@ const fs = require('fs');
 aws.config.update({
   region: 'us-east-2', 
   accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  AWS_S3_BUCKET: process.env.AWS_S3_BUCKET 
 })
 
-const S3_BUCKET = process.env.bucket
+const S3_BUCKET = process.env.AWS_S3_BUCKET
 
 exports.sign_s3 = (req,res) => {
   const s3 = new aws.S3();  // Create a new instance of S3
