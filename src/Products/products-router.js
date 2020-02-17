@@ -3,7 +3,6 @@ const express = require('express')
 const xss = require('xss')
 const logger = require('../logger')
 const ProductsService = require('./products-service')
-const { isWebUri } = require('valid-url')
 
 const ProductRouter = express.Router()
 const bodyParser = express.json()

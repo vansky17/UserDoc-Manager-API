@@ -3,7 +3,6 @@ const express = require('express')
 const xss = require('xss')
 const logger = require('../logger')
 const DocsService = require('./documents-service')
-const { isWebUri } = require('valid-url')
 
 const DocsRouter = express.Router()
 const bodyParser = express.json()
