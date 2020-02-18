@@ -14,9 +14,24 @@ function makeProductsArray() {
     } 
   ];
 }
+function makeMaliciousProduct() {
+	const maliciousProduct = {
+		id: 123,
+		name: `Bad image <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong> bad.`
+	};
 
+	const expectedProduct = {
+		...maliciousProduct,
+		name: `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`
+	};
+	return {
+		maliciousProduct,
+		expectedProduct
+	};
+}
 
 
 module.exports = {
-  makeProductsArray
+  makeProductsArray,
+  makeMaliciousProduct
 };

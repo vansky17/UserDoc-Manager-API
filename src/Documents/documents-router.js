@@ -52,7 +52,6 @@ DocsRouter
       .then(doc => {
         res
           .status(201)
-          /* .location(path.posix.join(req.originalUrl, `${doc.id}`)) */
           .json(serializeDoc(doc))
       })
       .catch(next)
@@ -123,17 +122,3 @@ DocsRouter
   })
 
 module.exports = DocsRouter
-
-/* 
-{
-	"name": "Next test",
-	"partnum": "1234.5678.01",
-	"vernum": 2,
-	"formattype": "pdf",
-	"reldate": "2017-04-23T18:25:43.511Z",
-	"author": "IS",
-	"productid": 1,
-	"descr": "This is a test doc.",
-	"path": "https://google.com"
-} 
-*/
