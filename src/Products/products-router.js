@@ -1,20 +1,19 @@
-const path = require('path')
-const express = require('express')
-const xss = require('xss')
-const logger = require('../logger')
-const ProductsService = require('./products-service')
+const path = require('path');
+const express = require('express');
+const xss = require('xss');
+const logger = require('../logger');
+const ProductsService = require('./products-service');
 
-const ProductRouter = express.Router()
-const bodyParser = express.json()
+const ProductRouter = express.Router();
+const bodyParser = express.json();
 
 const serializeProduct = product => ({
   id: product.id,
   name: xss(product.name)
-})
+});
 
 ProductRouter
   .route('/')
-
   .get((req, res, next) => {
     ProductsService.getAllProducts(req.app.get('db'))
       .then(product => {
@@ -22,7 +21,6 @@ ProductRouter
       })
       .catch(next)
   })
-
   .post(bodyParser, (req, res, next) => {
     const { id, name } = req.body
     const newProduct = { id, name }
@@ -32,10 +30,9 @@ ProductRouter
         logger.error(`${field} is required`)
         return res.status(400).send({
           error: { message: `'${field}' is required` }
-        })
+        });
       }
     }
-
 
     ProductsService.insertProduct(
       req.app.get('db'),
@@ -48,13 +45,12 @@ ProductRouter
           .location(path.posix.join(req.originalUrl, `${product.id}`))
           .json(serializeProduct(product))
       })
-      .catch(next)
-  })
+      .catch(next);
+  });
 
 
 ProductRouter
   .route('/:product_id')
-
   .all((req, res, next) => {
     const { product_id } = req.params
     ProductsService.getById(req.app.get('db'), product_id)
@@ -67,16 +63,13 @@ ProductRouter
         }
 
         res.product = product
-        next()
+        next();
       })
-      .catch(next)
-
+      .catch(next);
   })
-
   .get((req, res) => {
     res.json(serializeProduct(res.product))
   })
-
   .delete((req, res, next) => {
     const { product_id } = req.params
     ProductsService.deleteProduct(
@@ -89,7 +82,6 @@ ProductRouter
       })
       .catch(next)
   })
-
   .patch(bodyParser, (req, res, next) => {
     const { name } = req.body
     const productToUpdate = { name }
@@ -103,7 +95,6 @@ ProductRouter
         }
       })
     }
-
     ProductsService.updateProduct(
       req.app.get('db'),
       req.params.product_id,
@@ -112,7 +103,7 @@ ProductRouter
       .then(numRowsAffected => {
         res.status(204).end()
       })
-      .catch(next)
-  })
+      .catch(next);
+  });
 
 module.exports = ProductRouter

@@ -1,11 +1,11 @@
-const path = require('path')
-const express = require('express')
-const xss = require('xss')
-const logger = require('../logger')
-const DocsService = require('./documents-service')
+const path = require('path');
+const express = require('express');
+const xss = require('xss');
+const logger = require('../logger');
+const DocsService = require('./documents-service');
 
-const DocsRouter = express.Router()
-const bodyParser = express.json()
+const DocsRouter = express.Router();
+const bodyParser = express.json();
 
 const serializeDoc = doc => ({
   id: doc.id,
@@ -18,11 +18,10 @@ const serializeDoc = doc => ({
   productid: doc.productid,
   descr: xss(doc.descr),
   path: doc.path,
-})
+});
 
 DocsRouter
   .route('/')
-
   .get((req, res, next) => {
     DocsService.getAllDocs(req.app.get('db'))
       .then(docs => {
@@ -30,17 +29,15 @@ DocsRouter
       })
       .catch(next)
   })
-
   .post(bodyParser, (req, res, next) => {
-    const { id, name, partnum,vernum, formattype, reldate, author, productid, descr, path} = req.body
-    const newDoc = { id, name, partnum,vernum, formattype, reldate, author, productid, descr, path }
-
+    const { id, name, partnum,vernum, formattype, reldate, author, productid, descr, path} = req.body;
+    const newDoc = { id, name, partnum,vernum, formattype, reldate, author, productid, descr, path };
     for (const field of ['name']) {
       if (!newDoc[field]) {
         logger.error(`${field} is required`)
         return res.status(400).send({
           error: { message: `'${field}' is required` }
-        })
+        });
       }
     }
 
@@ -55,34 +52,30 @@ DocsRouter
           .json(serializeDoc(doc))
       })
       .catch(next)
-  })
+  });
 
 
 DocsRouter
   .route('/:doc_id')
-
   .all((req, res, next) => {
     const { doc_id } = req.params
     DocsService.getById(req.app.get('db'), doc_id)
       .then(doc => {
         if (!doc) {
-          logger.error(`Document with id ${doc} not found.`)
+          logger.error(`Document with id ${doc} not found.`);
           return res.status(404).json({
             error: { message: `Document Not Found` }
-          })
+          });
         }
 
         res.doc = doc
-        next()
+        next();
       })
-      .catch(next)
-
+      .catch(next);
   })
-
   .get((req, res) => {
     res.json(serializeDoc(res.doc))
   })
-
   .delete((req, res, next) => {
     const { doc_id } = req.params
     DocsService.deleteDoc(
@@ -95,7 +88,6 @@ DocsRouter
       })
       .catch(next)
   })
-
   .patch(bodyParser, (req, res, next) => {
     const { name } = req.body
     const docToUpdate = { name }
@@ -107,7 +99,7 @@ DocsRouter
         error: {
           message: `Request body must contain 'name'.`
         }
-      })
+      });
     }
 
     DocsService.updateDoc(
@@ -119,6 +111,6 @@ DocsRouter
         res.status(204).end()
       })
       .catch(next)
-  })
+  });
 
 module.exports = DocsRouter

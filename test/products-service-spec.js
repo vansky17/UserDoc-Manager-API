@@ -115,7 +115,6 @@ describe(`Products service object`, function() {
 
   /* Test endpoint POST /api/products */
   describe(`POST /api/products`, () => {
-		const testProducts =fixtures.makeProductsArray();
 
 		it(`creates a product responding with 201 and the new product`, () => {
 			const newProduct = {
