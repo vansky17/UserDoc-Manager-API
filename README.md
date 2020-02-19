@@ -1,5 +1,9 @@
-# UserDoc-Manager-API
-This is a **Node.js/Express** server app with CRUD endpoints that retrieves data from a database. The associated front-end can be found here: [UserDoc-Manager-Client](https://github.com/vansky17/UserDoc-Manager-Client.git).
+# UserDocs Manager
+![UserDocs screenshot](overview.png)
+
+[Live Demo](https://user-docs-manager.now.sh/)
+
+[UserDoc-Manager-Client](https://github.com/vansky17/UserDoc-Manager-Client.git).
 
 ## Description
 
