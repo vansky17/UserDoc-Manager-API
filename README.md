@@ -34,7 +34,7 @@ The purpose of this app is to serve as a small, yet not over-complicated content
 
 - A **Node.js/Express** server with routers handles the endpoints.
 
-##API
+## API
 
 The following API endpoints are used in this application:
 
